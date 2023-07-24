@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    let url = new URL(window.location.href)
+
+    let new_params = new URLSearchParams([
+      ...Array.from(url.searchParams.entries())
+    ]).toString()
+
+    let backPath = 'back.html?' + new_params
+    let newPath = window.location.href.substring(0, window.location.href.lastIndexOf("/") + 1) + '?' + new_params
+
+    window.history.pushState('back.html', 'back', backPath);
+    window.history.pushState('index.html', 'Index', newPath);
+    window.addEventListener("popstate", function (e) {
+      if (document.URL.indexOf("back.html") >= 0) {
+        document.location.href = backPath
+      }
+    });
+  </script>
+</body>
+
+</html>
